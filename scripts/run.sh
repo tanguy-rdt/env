@@ -7,6 +7,7 @@ LOG_DIR=${ROOT_DIR}/log
 APP_DIR=${ROOT_DIR}/app
 BUILD_DIR=${ROOT_DIR}/build
 DIST_DIR=${ROOT_DIR}/dist
+CONFIG_DIR=${1}
 
 source ${SCRIPTS_DIR}/utils.sh
 
@@ -16,7 +17,7 @@ RUN_LOG=${LOG_DIR}/run.log
 echo "" > ${RUN_LOG}
 
 chmod +x ${DIST_DIR}/env_configurator  >> ${RUN_LOG} 2>&1
-${DIST_DIR}/env_configurator  2>> ${RUN_LOG}
+${DIST_DIR}/env_configurator ${CONFIG_DIR} 2>> ${RUN_LOG}
 RET=$?
 echo
 

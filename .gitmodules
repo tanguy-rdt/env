@@ -1,0 +1,6 @@
+[submodule "app/json"]
+	path = app/json
+	url = git@github.com:nlohmann/json.git
+[submodule "app/third-party/json"]
+	path = app/third-party/json
+	url = git@github.com:nlohmann/json.git

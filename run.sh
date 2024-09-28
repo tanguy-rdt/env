@@ -48,7 +48,7 @@ run() {
     fi
 
     chmod +x ${WORKDIR}/scripts/run.sh
-    ${WORKDIR}/scripts/run.sh
+    ${WORKDIR}/scripts/run.sh ${CONFIG_DIR}
     if [ ! $? -eq 0 ]; then
         exit $?
     fi
