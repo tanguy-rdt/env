@@ -2,32 +2,23 @@
 #define CONFIG_PARSER_H
 
 #include <string>
-#include <iostream>
 
-#include "nlohmann/json.hpp"
-
+#include "toml++/toml.hpp"
 #include "config.h"
-
-using json = nlohmann::json;
 
 class ConfigParser {
     public:
         ConfigParser(const char* configFile);
         ~ConfigParser();
 
-
-
-        void parse(const char* configFile);
-        
         Config getConfig();
 
-
-
     private:
-        json _data;
-        Config _config;
+        void parseTable(const toml::table& table, const std::string indent);
+        void parseCategory(const toml::table& table, Category* category, const std::string indent);
+        Package parsePackage(const toml::table& table, const std::string indent);
 
-        void parseCategory(Category* category, const json& value);
-        void parsePackage(Category* parentCategory, const json& data);
+        toml::table _tomlConfig;
+        Config _config;
 };
 #endif // CONFIG_PARSER_H

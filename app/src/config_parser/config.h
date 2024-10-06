@@ -1,9 +1,15 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <string>
+#include <vector>
+#include <iostream>
+
 struct Package {
     std::string name;
+    std::string packageName;
     std::string installCmd;
+    bool enable;
 };
 
 struct Category {
@@ -28,10 +34,15 @@ struct Category {
     void display(int level = 0) const {
         std::string indent(level * 2, ' ');
 
-        std::cout << indent << "Category: " << name << " (SubCategory: " << nbSubCategory << ", Package " << nbPackage << " )" << std::endl;
-
+        std::cout << indent << "-- " << name << std::endl;
+        std::cout << std::endl;
+        
         for (const auto& pkg : packages) {
-            std::cout << indent << indent << "Package: " << pkg.name << ", Install Command: " << pkg.installCmd << std::endl;
+            std::cout << indent << "   * Package: " << pkg.name << std::endl;
+            std::cout << indent << "      Name: " << pkg.packageName << std::endl;
+            std::cout << indent << "      Install command: " << pkg.installCmd << std::endl;
+            std::cout << indent << "      Enable: " << pkg.enable << std::endl;
+            std::cout << std::endl;
         }
 
         for (const auto& subCat : subCategory) {

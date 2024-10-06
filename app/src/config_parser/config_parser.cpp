@@ -4,61 +4,62 @@
 #include "config_parser.h"
 
 ConfigParser::ConfigParser(const char* configFile) {
-    parse(configFile);
+    _tomlConfig = toml::parse_file(configFile);
+    parseTable(_tomlConfig, "");
+    
+    for (const auto& category: _config) {
+        category.display();
+    }
 }
 
 ConfigParser::~ConfigParser() {
     
 }
 
-void ConfigParser::parse(const char* configFile) {
-    std::ifstream f(configFile);
-    if (!f.is_open()) {
-        
-    }
+void ConfigParser::parseTable(const toml::table& table, const std::string indent) {
+    for (const auto& [key, value] : table) {
+        if (value.is_table()) {
+            std::string name = (*value.as_table())["name"].value_or("Unknow");
+            std::string type = (*value.as_table())["type"].value_or("Unknow");
 
-    _data = json::parse(f);
-
-    for (auto& [key, value] : _data.items()) {
-        Category category(key);
-
-        parseCategory(&category, value);
-        _config.push_back(category);
-    }
-
-    // for (const auto& conf : _config) {
-    //    conf.display();
-    // }
-}
-
-void ConfigParser::parseCategory(Category* category, const json& data) {
-    if (data.is_object()) {
-        for (auto& [subKey, subValue] : data.items()) {
-            if (subValue.is_array()) {
-                Category subCategory(subKey);
-                parsePackage(&subCategory, subValue); 
-                category->addSubCategory(subCategory); 
-            } 
-            else if (subValue.is_object()) {
-                Category subCategory(subKey);
-                parseCategory(&subCategory, subValue);
-                category->addSubCategory(subCategory); 
+            if (type == "category") {
+                Category category(name);
+                parseCategory(*value.as_table(), &category, indent + "  ");
+                _config.push_back(category);
             }
         }
     }
 }
 
-void ConfigParser::parsePackage(Category* parentCategory, const json& data) {
-    for (const auto& pkg : data) {
-        Package package;
-        package.name = pkg.value("name", ""); 
-        package.installCmd = pkg.value("install_command", "");
-        parentCategory->addPackage(package);
+void ConfigParser::parseCategory(const toml::table& table, Category* category, const std::string indent) {
+    for (const auto& [key, value] : table) {
+        if (value.is_table()) {
+            std::string name = (*value.as_table())["name"].value_or("Unknow");
+            std::string type = (*value.as_table())["type"].value_or("Unknow");
+
+            if (type == "sub_category") {
+                Category subCategory(name);
+                parseCategory(*value.as_table(), &subCategory, indent + "  ");
+                category->addSubCategory(subCategory);
+            } else if (type == "package") {
+                Package package = parsePackage(*value.as_table(), indent + "   ");
+                category->addPackage(package);
+            } 
+        }
     }
+}
+
+Package ConfigParser::parsePackage(const toml::table& table, const std::string indent) {
+    std::string name = table["name"].value_or("Unknow");
+    std::string packageName = table["package_name"].value_or("Unknow");
+    std::string installCmd = table["install_cmd"].value_or("Unknow");
+    bool enable = (table["enable"].value<bool>() ? true : false);
+
+    Package package = { name, packageName, installCmd, enable };
+
+    return package;
 }
 
 Config ConfigParser::getConfig() {
     return _config;
 }
-
-

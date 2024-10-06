@@ -15,7 +15,7 @@ Usage: $0 [OPTION]...
 OPTIONS:
   -d, --debian     setup env for debian
   -u, --ubuntu     setup env for ubuntu
-  --clean          clean project
+  -clean          clean project
 
   -h, --help      Show this help
 
@@ -72,7 +72,7 @@ case "${1}" in
     -u|--ubuntu)
         ubuntu
         ;;
-    --clean)
+    -clean)
         clean
         ;;
     -h|--help)

@@ -1,5 +1,5 @@
 {
-    "Système": {
+    "SYSTEMS": {
         "Terminal": [
             {
                 "name": "terminator",
@@ -31,7 +31,7 @@
             ]
         }
     },
-    "Software": {
+    "SOFTWARE": {
         "IDE": [
             {
                 "name": "vscodium",

@@ -22,8 +22,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${DIST_DIR})
 # ADD THIRD_PARTY
 # 
 
-add_subdirectory(third-party/json)
-
+add_subdirectory(third-party/tomlplusplus)
+add_subdirectory(third-party/termUi)
 
 #
 # ADD .cpp & .h
@@ -50,4 +50,4 @@ list(REMOVE_DUPLICATES INCLUDE_DIRS)
 
 add_executable(${PROJECT_NAME} ${SRC})
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} nlohmann_json::nlohmann_json)
+target_link_libraries(${PROJECT_NAME} tomlplusplus::tomlplusplus termUi)

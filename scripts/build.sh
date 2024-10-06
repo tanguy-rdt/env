@@ -18,7 +18,7 @@ echo "" > ${BUILD_LOG}
 cmake -GNinja -S ${APP_DIR} -B ${BUILD_DIR} >> ${BUILD_LOG} 2>&1
 RET=$?
 
-ninja -C ${BUILD_DIR} >> ${BUILD_LOG} 2>&1
+ninja -C ${BUILD_DIR} #>> ${BUILD_LOG} 2>&1
 RET=$?
 
 if [ ${RET} -eq 0 ]; then

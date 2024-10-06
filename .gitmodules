@@ -1,9 +1,9 @@
 [submodule "app/json"]
 	path = app/json
 	url = git@github.com:nlohmann/json.git
-[submodule "app/third-party/json"]
-	path = app/third-party/json
-	url = git@github.com:nlohmann/json.git
 [submodule "app/third-party/termUi"]
 	path = app/third-party/termUi
 	url = git@github.com:tanguy-rdt/TermUi.git
+[submodule "app/third-party/tomlplusplus"]
+	path = app/third-party/tomlplusplus
+	url = git@github.com:marzer/tomlplusplus.git
