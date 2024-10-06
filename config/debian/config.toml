@@ -16,7 +16,6 @@ package_name = "git"
 install_cmd = "sh -c \"$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\""
 enable = false
 
-
 [systems.zsh]
 name = "ZSH"
 type = "sub_category"
