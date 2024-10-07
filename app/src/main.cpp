@@ -13,10 +13,9 @@ int main(int argc, char* argv[]) {
     ConfigParser configParser(configFile);
     Config config = configParser.getConfig();
 
-    Tui tui(config);
+    Tui tui(&config);
+    tui.init();
+    int ret = tui.run();
 
-
-
-
-    return 0;
+    return ret;
 }

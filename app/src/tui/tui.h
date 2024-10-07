@@ -9,14 +9,19 @@
 
 class Tui {
     public:
-        Tui(Config config);
+        Tui(Config* config);
         ~Tui();
 
-    private:
         void init();
+        int run();
 
-        Config _config;
-        TermUi _termUi;
+    private:
+        void populateCategory(Page* page, Category* cat);
+        void cancelBtn();
+        void enterBtn();
+
+        Config* _config;
+        TermUi* _termUi;
         Page* page;
 };
 #endif // TUI_H
