@@ -7,9 +7,9 @@ ConfigParser::ConfigParser(const char* configFile) {
     _tomlConfig = toml::parse_file(configFile);
     parseTable(_tomlConfig, "");
     
-    for (const auto& category: _config) {
-        category.display();
-    }
+    // for (const auto& category: _config) {
+    //     category.display();
+    // }
 }
 
 ConfigParser::~ConfigParser() {
@@ -53,7 +53,7 @@ Package ConfigParser::parsePackage(const toml::table& table, const std::string i
     std::string name = table["name"].value_or("Unknow");
     std::string packageName = table["package_name"].value_or("Unknow");
     std::string installCmd = table["install_cmd"].value_or("Unknow");
-    bool enable = (table["enable"].value<bool>() ? true : false);
+    bool enable = table["enable"].value_or(false);
 
     Package package = { name, packageName, installCmd, enable };
 
