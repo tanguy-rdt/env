@@ -8,7 +8,7 @@
 
 class ConfigParser {
     public:
-        ConfigParser(const char* configFile);
+        ConfigParser(const std::string configFile);
         ~ConfigParser();
 
         Config getConfig();

@@ -3,13 +3,9 @@
 
 #include "config_parser.h"
 
-ConfigParser::ConfigParser(const char* configFile) {
+ConfigParser::ConfigParser(const std::string configFile) {
     _tomlConfig = toml::parse_file(configFile);
     parseTable(_tomlConfig, "");
-    
-    // for (const auto& category: _config) {
-    //     category.display();
-    // }
 }
 
 ConfigParser::~ConfigParser() {
