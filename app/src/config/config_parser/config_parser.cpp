@@ -6,6 +6,10 @@
 ConfigParser::ConfigParser(const std::string configFile) {
     _tomlConfig = toml::parse_file(configFile);
     parseTable(_tomlConfig, "");
+
+    for (const auto& cat: _config) {
+        cat.display();
+    }
 }
 
 ConfigParser::~ConfigParser() {
@@ -49,9 +53,11 @@ Package ConfigParser::parsePackage(const toml::table& table, const std::string i
     std::string name = table["name"].value_or("Unknow");
     std::string packageName = table["package_name"].value_or("Unknow");
     std::string installCmd = table["install_cmd"].value_or("Unknow");
+    std::string checkCmd = table["check_command"].value_or("Unknow");
+    int expectedResult = table["expected_result"].value_or(0);
     bool enable = table["enable"].value_or(false);
 
-    Package package = { name, packageName, installCmd, enable };
+    Package package = { name, packageName, installCmd, checkCmd, expectedResult, enable };
 
     return package;
 }

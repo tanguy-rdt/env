@@ -9,6 +9,8 @@ struct Package {
     std::string name;
     std::string packageName;
     std::string installCmd;
+    std::string checkCmd;
+    int expectedResult;
     bool enable;
 };
 
@@ -41,6 +43,8 @@ struct Category {
             std::cout << indent << "   * Package: " << pkg.name << std::endl;
             std::cout << indent << "      Name: " << pkg.packageName << std::endl;
             std::cout << indent << "      Install command: " << pkg.installCmd << std::endl;
+            std::cout << indent << "      Check command: " << pkg.checkCmd << std::endl;
+            std::cout << indent << "      Expected result: " << pkg.expectedResult << std::endl;
             std::cout << indent << "      Enable: " << pkg.enable << std::endl;
             std::cout << std::endl;
         }

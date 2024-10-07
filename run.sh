@@ -52,6 +52,12 @@ run() {
     if [ ! $? -eq 0 ]; then
         exit $?
     fi
+
+    chmod +x ${WORKDIR}/scripts/packages_installer.sh
+    ${WORKDIR}/scripts/packages_installer.sh ${CONFIG_DIR}
+    if [ ! $? -eq 0 ]; then
+        exit $?
+    fi
 }
 
 clean() {

@@ -3,7 +3,7 @@
 
 ConfigGenerator::ConfigGenerator(Config* config, const std::string fileGeneratedPath) :
     _config(config), _fileGeneratedPath(fileGeneratedPath) {
-        
+
 }
 
 ConfigGenerator::~ConfigGenerator() {
@@ -46,6 +46,8 @@ void ConfigGenerator::addPackage(const Package* package) {
         pkg.insert_or_assign("name", toml::value<std::string>(package->name));
         pkg.insert_or_assign("package_name", toml::value<std::string>(package->packageName));
         pkg.insert_or_assign("install_command", toml::value<std::string>(package->installCmd));
+        pkg.insert_or_assign("check_command", toml::value<std::string>(package->checkCmd));
+        pkg.insert_or_assign("expected_result", package->expectedResult);
         _packages.push_back(pkg);
     }
 }

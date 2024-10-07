@@ -26,39 +26,32 @@ DEPENDENCIES_EXPECTED_RES=()
 
 while IFS= read -r LINE; do
     if [[ "${LINE}" =~ \[\[dependencies\]\] ]]; then
-        read -r NAME_LINE
-        if [[ $NAME_LINE =~ name\ =\ \"([^\"]+)\" ]]; then
-            DEPENDENCIES_NAME+=("${BASH_REMATCH[1]}")
-        else 
-            print -se "Unable to parse ${TOML_FILE}, incorrect syntax in 'name' at dependency ${DEPENDENCIES_HOVERED}"
-            exit 2
-        fi
+        DEPENDENCIES_HOVERED=$((DEPENDENCIES_HOVERED + 1))
+        for i in {0..3}; do
+            read -r DEPENDENCY_INFO_LINE
 
-        read -r INSTALL_CMD_LINE
-        if [[ $INSTALL_CMD_LINE =~ install_command\ =\ \"(.*)\" ]]; then
-            DEPENDENCIES_INSTALL_CMD+=("${BASH_REMATCH[1]}")
-        else 
-            print -se "Unable to parse ${TOML_FILE}, incorrect syntax in 'install_command' at dependency ${DEPENDENCIES_HOVERED}"
-            exit 3
-        fi
-
-        read -r CHECK_CMD_LINE
-        if [[ $CHECK_CMD_LINE =~ check_command\ =\ \"(.*)\" ]]; then
-            DEPENDENCIES_CHECK_CMD+=("${BASH_REMATCH[1]}")
-        else 
-            print -se "Unable to parse ${TOML_FILE}, incorrect syntax in 'check_command' at dependency ${DEPENDENCIES_HOVERED}"
-            exit 4
-        fi
-
-        read -r EXPECTED_RESULT_LINE
-        if [[ $EXPECTED_RESULT_LINE =~ expected_result\ =\ ([0-9]+) ]]; then
-            DEPENDENCIES_EXPECTED_RES+=("${BASH_REMATCH[1]}")
-        else 
-            print -se "Unable to parse ${TOML_FILE}, incorrect syntax in 'expected_result' at dependency ${DEPENDENCIES_HOVERED}"
-            exit 5
-        fi
+            if [[ $DEPENDENCY_INFO_LINE =~ name\ =\ \'(.*)\' ]]; then
+                DEPENDENCIES_NAME+=("${BASH_REMATCH[1]}")
+            elif [[ $DEPENDENCY_INFO_LINE =~ install_command\ =\ \'(.*)\' ]]; then
+                DEPENDENCIES_INSTALL_CMD+=("${BASH_REMATCH[1]}")
+            elif [[ $DEPENDENCY_INFO_LINE =~ check_command\ =\ \'(.*)\' ]]; then
+                DEPENDENCIES_CHECK_CMD+=("${BASH_REMATCH[1]}")
+            elif [[ $DEPENDENCY_INFO_LINE =~ expected_result\ =\ ([0-9]+) ]]; then
+                DEPENDENCIES_EXPECTED_RES+=("${BASH_REMATCH[1]}")
+            else 
+                print -se "Unable to parse ${TOML_FILE}, incorrect syntax at dependency ${DEPENDENCIES_HOVERED}"
+                exit 2
+            fi
+        done
     fi
 done < "$TOML_FILE"
+
+if [[ ${#DEPENDENCIES_NAME[@]} -ne ${#DEPENDENCIES_INSTALL_CMD[@]} || \
+      ${#DEPENDENCIES_NAME[@]} -ne ${#DEPENDENCIES_CHECK_CMD[@]} || \
+      ${#DEPENDENCIES_NAME[@]} -ne ${#DEPENDENCIES_EXPECTED_RES[@]} ]]; then
+    print -se "Some information is missing from the dependencies declaration"
+    exit 3
+fi
 
 DEPENDENCIES_TO_INSTALL_NAME=()
 DEPENDENCIES_TO_INSTALL_CMD=()
@@ -83,7 +76,7 @@ if [ -n "${DEPENDENCIES_TO_INSTALL_NAME}" ]; then
                 ;;
             n|no)
                 print -si "You need to install the dependencies '${DEPENDENCIES_TO_INSTALL_NAME[@]}' to continue"
-                exit 6
+                exit 4
                 ;;
             *)
                 ;;
@@ -113,5 +106,5 @@ if [ ${#MISSING_DEPENDENCIES[@]} -eq 0 ]; then
 else 
     print -se "The following dependencies is missing: '${MISSING_DEPENDENCIES[@]}'"
     print -si "Check '${DEPENDENCIES_LOG}' for more informations"
-    exit 7
+    exit 5
 fi

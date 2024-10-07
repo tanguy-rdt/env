@@ -6,34 +6,7 @@ type = "category"
 name = "Terminator"
 type = "package"
 package_name = "terminator"
-install_cmd = "sh -c \"$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\""
+install_cmd = "sudo apt install -y terminator"
+check_command = "which terminator"
+expected_result = 0
 enable = true
-
-[systems.git]
-name = "Git"
-type = "package"
-package_name = "git"
-install_cmd = "sh -c \"$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\""
-enable = false
-
-[systems.zsh]
-name = "ZSH"
-type = "sub_category"
-
-[systems.zsh.oh_my_zsh]
-name = "Oh My Zsh"
-type = "package"
-package_name = "oh-my-zsh"
-install_cmd = "sh -c \"$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\""
-enable = true
-
-[software]
-name = "SOFTWARE"
-type = "category"
-
-[software.vscodium]
-name = "VsCodium"
-type = "package"
-package_name = "vscodium"
-install_cmd = "sh -c \"$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\""
-enable = false
