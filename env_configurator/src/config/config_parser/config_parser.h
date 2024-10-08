@@ -16,7 +16,7 @@ class ConfigParser {
     private:
         void parseTable(const toml::table& table, const std::string indent);
         void parseCategory(const toml::table& table, Category* category, const std::string indent);
-        Package parsePackage(const toml::table& table, const std::string indent);
+        Job parseJob(const toml::table& table, const std::string indent);
 
         toml::table _tomlConfig;
         Config _config;

@@ -38,14 +38,16 @@ int Tui::run(){
         delete _termUi;
         return ret;
     }
+
+    return 1;
 }
 
 void Tui::populateCategory(Page* page, Category* cat){
-    page->addTitle(cat->name);
+    page->addTitle(cat->uiName);
 
-    for (auto& pkg: cat->packages) {
-        page->addSelectableLine(pkg.name, pkg.enable, [this, &pkg](bool enable) {
-            pkg.enable = enable;
+    for (auto& job: cat->jobs) {
+        page->addSelectableLine(job.uiName, job.enable, [this, &job](bool enable) {
+            job.enable = enable;
         });
     }
 
@@ -64,12 +66,12 @@ void Tui::populateCategory(Page* page, Category* cat){
         });
 
         populateCategory(subPage, &subCat);
-        page->addEmbeddedPageLine(subCat.name, subPage);
+        page->addEmbeddedPageLine(subCat.uiName, subPage);
     }
 }
 
 void Tui::cancelBtn(){
-    _termUi->quit(1);
+    _termUi->quit(100);
 }
 
 void Tui::enterBtn(){

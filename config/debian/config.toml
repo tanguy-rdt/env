@@ -1,12 +1,12 @@
 [systems]
-name = "SYSTEMS"
+ui_name = "SYSTEMS"
 type = "category"
 
 [systems.terminator]
-name = "Terminator"
-type = "package"
-package_name = "terminator"
-install_cmd = "sudo apt install -y terminator"
+job_name = "Install Terminator"
+ui_name = "Terminator"
+type = "job"
+run_command = "sudo apt install -y terminator"
 check_command = "which terminator"
 expected_result = 0
 enable = true

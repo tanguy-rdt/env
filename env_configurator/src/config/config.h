@@ -5,27 +5,27 @@
 #include <vector>
 #include <iostream>
 
-struct Package {
-    std::string name;
-    std::string packageName;
-    std::string installCmd;
+struct Job {
+    std::string uiName;
+    std::string jobName;
+    std::string runCmd;
     std::string checkCmd;
     int expectedResult;
     bool enable;
 };
 
 struct Category {
-    std::string name;
-    std::vector<Package> packages;
-    int nbPackage = 0;
+    std::string uiName;
+    std::vector<Job> jobs;
+    int nbJob = 0;
     std::vector<Category> subCategory;
     int nbSubCategory = 0;
 
-    Category(const std::string& n) : name(n) {}
+    Category(const std::string& n) : uiName(n) {}
 
-    void addPackage(const Package& pkg) {
-        packages.push_back(pkg);
-        nbPackage += 1;
+    void addJob(const Job& job) {
+        jobs.push_back(job);
+        nbJob += 1;
     }
 
     void addSubCategory(const Category& cat) {
@@ -36,16 +36,16 @@ struct Category {
     void display(int level = 0) const {
         std::string indent(level * 2, ' ');
 
-        std::cout << indent << "-- " << name << std::endl;
+        std::cout << indent << "-- " << uiName << std::endl;
         std::cout << std::endl;
         
-        for (const auto& pkg : packages) {
-            std::cout << indent << "   * Package: " << pkg.name << std::endl;
-            std::cout << indent << "      Name: " << pkg.packageName << std::endl;
-            std::cout << indent << "      Install command: " << pkg.installCmd << std::endl;
-            std::cout << indent << "      Check command: " << pkg.checkCmd << std::endl;
-            std::cout << indent << "      Expected result: " << pkg.expectedResult << std::endl;
-            std::cout << indent << "      Enable: " << pkg.enable << std::endl;
+        for (const auto& job : jobs) {
+            std::cout << indent << "   * Job: " << job.jobName << std::endl;
+            std::cout << indent << "      UI Name: " << job.uiName << std::endl;
+            std::cout << indent << "      Run command: " << job.runCmd << std::endl;
+            std::cout << indent << "      Check command: " << job.checkCmd << std::endl;
+            std::cout << indent << "      Expected result: " << job.expectedResult << std::endl;
+            std::cout << indent << "      Enable: " << job.enable << std::endl;
             std::cout << std::endl;
         }
 

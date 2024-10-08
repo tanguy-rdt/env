@@ -1,29 +1,29 @@
-[[dependencies]]
-name = 'gcc'
-install_command = 'sudo apt install -y gcc'
+[[job]]
+job_name = 'Install gcc'
+run_command = 'sudo apt install -y gcc'
 check_command = 'which gcc'
 expected_result = 0
 
-[[dependencies]]
-name = 'g++'
-install_command = 'sudo apt install -y g++'
+[[job]]
+job_name = 'Install g++'
+run_command = 'sudo apt install -y g++'
 check_command = 'which g++'
 expected_result = 0
 
-[[dependencies]]
-name = 'cmake'
-install_command = 'sudo apt install -y cmake'
+[[job]]
+job_name = 'Install Cmake'
+run_command = 'sudo apt install -y cmake'
 check_command = 'which cmake'
 expected_result = 0
 
-[[dependencies]]
-name = 'ninja'
-install_command = 'sudo apt install -y ninja-build'
+[[job]]
+job_name = 'Install Ninja'
+run_command = 'sudo apt install -y ninja-build'
 check_command = 'which ninja'
 expected_result = 0
 
-[[dependencies]]
-name = 'ncurses'
-install_command = 'sudo apt install -y libncurses5-dev libncursesw5-dev'
+[[job]]
+job_name = 'Install ncurses'
+run_command = 'sudo apt install -y libncurses5-dev libncursesw5-dev'
 check_command = 'dpkg -l | grep -E "libncurses5-dev|libncursesw5-dev"'
 expected_result = 0

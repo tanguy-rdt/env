@@ -16,23 +16,25 @@ int ConfigGenerator::generate() {
         goThroughCategory(&cat);
     }
 
-    toml::table packages;
-    packages.insert_or_assign("package", _packages);
+
+    toml::table jobs;
+    jobs.insert_or_assign("job", _jobs);
 
     std::ofstream file(_fileGeneratedPath);
-
-    if (file.is_open()) {
-        file << packages;
+    
+    if (file.is_open() && !_jobs.empty()) {
+        file << jobs;
         file.close();
         return 0;
     } else {
+        file.close();
         return 2;
     }
 }
 
 void ConfigGenerator::goThroughCategory(const Category* category) {
-    for (auto& pkg: category->packages) {
-        addPackage(&pkg);
+    for (auto& job: category->jobs) {
+        addJob(&job);
     }
 
     for (auto& subCat: category->subCategory) {
@@ -40,14 +42,13 @@ void ConfigGenerator::goThroughCategory(const Category* category) {
     }
 }
 
-void ConfigGenerator::addPackage(const Package* package) {
-    if (package->enable) {
-        toml::table pkg;
-        pkg.insert_or_assign("name", toml::value<std::string>(package->name));
-        pkg.insert_or_assign("package_name", toml::value<std::string>(package->packageName));
-        pkg.insert_or_assign("install_command", toml::value<std::string>(package->installCmd));
-        pkg.insert_or_assign("check_command", toml::value<std::string>(package->checkCmd));
-        pkg.insert_or_assign("expected_result", package->expectedResult);
-        _packages.push_back(pkg);
+void ConfigGenerator::addJob(const Job* job) {
+    if (job->enable) {
+        toml::table tomlJob;
+        tomlJob.insert_or_assign("job_name", toml::value<std::string>(job->jobName));
+        tomlJob.insert_or_assign("run_command", toml::value<std::string>(job->runCmd));
+        tomlJob.insert_or_assign("check_command", toml::value<std::string>(job->checkCmd));
+        tomlJob.insert_or_assign("expected_result", job->expectedResult);
+        _jobs.push_back(tomlJob);
     }
 }

@@ -19,12 +19,15 @@ echo "" > ${RUN_LOG}
 chmod +x ${DIST_DIR}/env_configurator  >> ${RUN_LOG} 2>&1
 ${DIST_DIR}/env_configurator ${CONFIG_DIR} 2>> ${RUN_LOG}
 RET=$?
-echo
 
 if [ ${RET} -eq 0 ]; then
     print -s "App exited with success"
     echo
     exit 0
+elif [ ${RET} -eq 100 ]; then
+    echo
+    print -si "The app has been interrupted"
+    exit 100
 else 
     print -se "App exited with error: ${RET}"
     print -si "Check '${RUN_LOG}' for more informations"

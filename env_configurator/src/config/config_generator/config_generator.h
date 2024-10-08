@@ -15,10 +15,10 @@ class ConfigGenerator {
 
     private:
         void goThroughCategory(const Category* category);
-        void addPackage(const Package* package);
+        void addJob(const Job* job);
 
         Config* _config;
         const std::string _fileGeneratedPath;
-        toml::array _packages;
+        toml::array _jobs;
 };
 #endif // CONFIG_GENERATOR_H
