@@ -5,7 +5,12 @@ const ThemeContext = createContext<any>(null);
 export const getCurrentTheme = () => useContext(ThemeContext);
 
 export const Theme = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const getPreferredTheme = () => {
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    return prefersDarkScheme.matches ? 'dark' : 'light';
+  };
+
+  const [theme, setTheme] = useState<'light' | 'dark'>(getPreferredTheme());
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));

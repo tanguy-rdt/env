@@ -4,7 +4,7 @@ import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 
 import { Theme } from './context/Theme';
-import ThemeToggle from './components/theme/ThemeToggle';
+import ThemeToggle from './components/theme_toggle/ThemeToggle';
 import Menu from './components/menu/Menu';
 
 function App() {
