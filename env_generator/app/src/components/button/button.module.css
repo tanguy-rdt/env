@@ -17,3 +17,13 @@
     border-color: #396cd8;
     background-color: #0f0f0f69;
 }
+
+.light {
+  background-color: #dddddd;
+  color: #00000098;
+}
+  
+.dark {
+  background-color: #0f0f0f98;
+  color: white;
+}

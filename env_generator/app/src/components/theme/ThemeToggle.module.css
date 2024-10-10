@@ -1,0 +1,21 @@
+.button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 1000; 
+  transition: text-shadow 0.3s ease; 
+}
+
+.light:hover {
+  text-shadow: 0 0 20px rgba(0, 0, 0, 1); 
+}
+
+.dark:hover {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 1); 
+}

@@ -3,6 +3,8 @@ import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 
+import { Theme } from './context/Theme';
+import ThemeToggle from './components/theme/ThemeToggle';
 import Menu from './components/menu/Menu';
 
 function App() {
@@ -13,9 +15,10 @@ function App() {
   ];
 
   return (
-    <div className="container">
+    <Theme>
+      <ThemeToggle />
       <Menu title="Mon Menu Principal" items={menuItems} />
-    </div>
+    </Theme>
   );
 }
 

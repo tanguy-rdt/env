@@ -3,31 +3,22 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  --color: #f6f6f6;
+  --background-color: #2f2f2f;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
 
-.container {
-  margin: 0;
-  padding-top: 10vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.row {
-  display: flex;
-  justify-content: center;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
-  }
-}
+button {
+  transition: background-color 0.3s, color 0.3s;
+} 
